@@ -1,47 +1,74 @@
+// 1. Kredensial Supabase
 const SUPABASE_URL = 'https://rzqgnoysthpxgfxscruo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6cWdub3lzdGhweGdmeHNjcnVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNjMwMjEsImV4cCI6MjEwNzYzOTAyMX0.-6Ces2KK3JBvWBiX-KuN_dyg3NxYzG1nuxg9fhSuir0';
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// 2. Inisialisasi Supabase Client Aman
+let supabase;
+if (window.supabase && window.supabase.createClient) {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+} else {
+  console.error("Library Supabase belum terload di index.html!");
+}
 
 let allLaundries = [];
 
+// 3. Fungsi Ambil Data
 async function fetchLaundries() {
   const listContainer = document.getElementById('laundry-list');
+  if (!listContainer) return;
+
+  if (!supabase) {
+    listContainer.innerHTML = `
+      <div class="col-span-full text-center text-red-500 py-8">
+        <p class="font-bold">Library Supabase gagal dimuat!</p>
+        <p class="text-sm text-gray-500 mt-1">Pastikan script Supabase CDN di index.html dipasang SEBELUM app.js.</p>
+      </div>
+    `;
+    return;
+  }
 
   try {
     const { data, error } = await supabase.from('laundry').select('*');
 
     if (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error dari Supabase:', error);
       listContainer.innerHTML = `
         <div class="col-span-full text-center text-red-500 py-8">
-          <p class="font-bold">Gagal memuat data laundry.</p>
-          <p class="text-sm mt-1">Pastikan RLS Policy di Supabase sudah di-enable (Read / SELECT access for everyone).</p>
+          <p class="font-bold">Gagal mengambil data dari database.</p>
+          <p class="text-xs text-gray-500 mt-1">Detail Error: ${error.message || JSON.stringify(error)}</p>
         </div>
       `;
       return;
     }
 
-    allLaundries = data || [];
+    if (!data || data.length === 0) {
+      listContainer.innerHTML = `
+        <div class="col-span-full text-center text-gray-500 py-8">
+          <p class="font-bold">Tabel 'laundry' masih kosong.</p>
+          <p class="text-sm text-gray-400 mt-1">Silakan tambah data laundry baru di Supabase Table Editor.</p>
+        </div>
+      `;
+      return;
+    }
+
+    allLaundries = data;
     renderLaundries(allLaundries);
 
   } catch (err) {
-    console.error('Error:', err);
+    console.error('Error tidak terduga:', err);
+    listContainer.innerHTML = `
+      <div class="col-span-full text-center text-red-500 py-8">
+        <p class="font-bold">Terjadi kesalahan sistem.</p>
+        <p class="text-xs text-gray-500 mt-1">${err.message}</p>
+      </div>
+    `;
   }
 }
 
+// 4. Fungsi Render Kartu Laundry
 function renderLaundries(data) {
   const listContainer = document.getElementById('laundry-list');
-
-  if (!data || data.length === 0) {
-    listContainer.innerHTML = `
-      <div class="col-span-full text-center text-gray-500 py-10">
-        <i class="fa-solid fa-box-open text-3xl mb-2 text-gray-400"></i>
-        <p>Tidak ada data laundry yang ditemukan.</p>
-      </div>
-    `;
-    return;
-  }
+  if (!listContainer) return;
 
   listContainer.innerHTML = data.map(item => `
     <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition border border-gray-100 overflow-hidden flex flex-col justify-between">
@@ -49,7 +76,7 @@ function renderLaundries(data) {
         <div class="relative">
           <img 
             src="${item.image_url || 'https://via.placeholder.com/400x250?text=Foto+Laundry'}" 
-            alt="${item.name}" 
+            alt="${item.name || 'Laundry'}" 
             class="w-full h-48 object-cover"
           />
           ${item.rating ? `
@@ -66,11 +93,13 @@ function renderLaundries(data) {
           </p>
 
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md">
-              🛠️ ${item.services || 'Kiloan & Express'}
-            </span>
+            ${item.services ? `
+              <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md">
+                🛠️ ${item.services}
+              </span>
+            ` : '<span></span>'}
             <span class="text-sm font-bold text-green-600">
-              ${item.price ? `Rp ${item.price.toLocaleString('id-ID')}/kg` : ''}
+              ${item.price ? `Rp ${Number(item.price).toLocaleString('id-ID')}/kg` : ''}
             </span>
           </div>
 
@@ -115,7 +144,7 @@ function renderLaundries(data) {
   `).join('');
 }
 
-// FITUR SEARCH & FILTER
+// 5. Event Listener Utama
 document.addEventListener('DOMContentLoaded', () => {
   fetchLaundries();
 
@@ -154,3 +183,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+  
