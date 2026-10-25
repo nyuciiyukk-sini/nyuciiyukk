@@ -1,76 +1,1482 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NyuciYuk - Direktori Laundry Terdekat</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 p-6">
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NyuciYuk - Platform & Direktori Laundry Semarang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-  <!-- Header -->
-  <header class="max-w-4xl mx-auto mb-8 flex justify-between items-center">
-    <div>
-      <h1 class="text-3xl font-bold text-blue-600">NyuciYuk 🧺</h1>
-      <p class="text-gray-600 mt-1">Cari & Hubungi Laundry Terdekat Cuma Sekali Klik</p>
-    </div>
-    <!-- Tombol Khusus Admin -->
-    <a href="admin.html" class="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-200 transition">
-      + Input Data (Admin)
-    </a>
-  </header>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white"
+  >
+    <!-- ================= NAVBAR ================= -->
+    <header
+      class="sticky top-0 z-40 glass-effect border-b border-slate-200/80 shadow-sm transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <!-- Logo -->
+          <a
+            href="#home"
+            onclick="
+              switchTab('direktori');
+              filterDistrict('all');
+            "
+            class="flex items-center gap-3 group"
+          >
+            <div
+              class="w-11 h-11 bg-gradient-to-tr from-brand-700 to-brand-500 rounded-2xl flex items-center justify-center text-white text-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform"
+            >
+              <i class="fa-solid me-0 fa-soap"></i>
+            </div>
+            <div>
+              <span
+                class="text-2xl font-extrabold bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent"
+                >NyuciYuk</span
+              >
+              <span
+                class="block text-[10px] font-bold tracking-widest text-slate-400 uppercase -mt-1"
+                >Semarang Hub</span
+              >
+            </div>
+          </a>
 
-  <!-- Tempat Menampilkan Kartu Laundry -->
-  <main class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6" id="laundry-list">
-  </main>
+          <!-- Desktop Navigation Menu -->
+          <nav
+            class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60"
+          >
+            <button
+              onclick="
+                switchTab('direktori');
+                filterDistrict('all');
+              "
+              id="nav-semua"
+              class="nav-btn px-5 py-2 rounded-full text-xs font-semibold transition-all bg-white text-brand-700 shadow-sm"
+            >
+              <i class="fa-solid fa-border-all mr-1.5"></i>Semua Laundry
+            </button>
+            <button
+              onclick="
+                switchTab('direktori');
+                filterDistrict('Semarang Tengah');
+              "
+              id="nav-tengah"
+              class="nav-btn px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-brand-600 transition-all"
+            >
+              <i class="fa-solid fa-graduation-cap mr-1.5"></i>Semarang Tengah
+            </button>
+            <button
+              onclick="
+                switchTab('direktori');
+                filterDistrict('Semarang Barat');
+              "
+              id="nav-barat"
+              class="nav-btn px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-brand-600 transition-all"
+            >
+              <i class="fa-solid fa-building-user mr-1.5"></i>Semarang Barat
+            </button>
+            <button
+              onclick="switchTab('mitra')"
+              id="nav-mitra"
+              class="nav-btn px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-brand-600 transition-all"
+            >
+              <i class="fa-solid fa-handshake mr-1.5"></i>Paket Mitra
+            </button>
+            <button
+              onclick="switchTab('profil')"
+              id="nav-profil"
+              class="nav-btn px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-brand-600 transition-all"
+            >
+              <i class="fa-solid fa-circle-info mr-1.5"></i>Tentang Kami
+            </button>
+          </nav>
 
-  <script>
-    // Membaca data yang diinput dari admin.html
-    const dataLaundry = JSON.parse(localStorage.getItem('nyuciYukData')) || [];
-    const container = document.getElementById('laundry-list');
+          <!-- CTA Action -->
+          <div class="hidden md:flex items-center gap-3">
+            <button
+              onclick="openJoinMitraModal('Pro Mitra')"
+              class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-brand-600/25 transition-all hover:-translate-y-0.5 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-plus-circle"></i> Gabung Mitra
+            </button>
+          </div>
 
-    if (dataLaundry.length === 0) {
-      container.innerHTML = `
-        <div class="col-span-2 text-center py-12 bg-white rounded-xl shadow border">
-          <p class="text-gray-500 font-medium">Belum ada data laundry yang dimasukkan.</p>
-          <a href="admin.html" class="inline-block mt-3 text-blue-600 font-bold hover:underline">Klik di sini untuk mengisi data lewat Admin.html</a>
+          <!-- Mobile Menu Button -->
+          <button
+            onclick="toggleMobileMenu()"
+            class="md:hidden w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 hover:text-brand-600"
+          >
+            <i class="fa-solid fa-bars text-lg" id="mobile-menu-icon"></i>
+          </button>
         </div>
-      `;
-    } else {
-      dataLaundry.forEach(item => {
-        container.innerHTML += `
-          <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col justify-between">
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden border-b border-slate-200 bg-white/95 px-4 pt-2 pb-6 space-y-2"
+      >
+        <button
+          onclick="
+            switchTab('direktori');
+            filterDistrict('all');
+            toggleMobileMenu();
+          "
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-50 hover:text-brand-600 flex items-center gap-3"
+        >
+          <i class="fa-solid fa-border-all text-brand-500 w-5"></i> Semua
+          Laundry
+        </button>
+        <button
+          onclick="
+            switchTab('direktori');
+            filterDistrict('Semarang Tengah');
+            toggleMobileMenu();
+          "
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-50 hover:text-brand-600 flex items-center gap-3"
+        >
+          <i class="fa-solid fa-graduation-cap text-brand-500 w-5"></i> Semarang
+          Tengah (Kampus)
+        </button>
+        <button
+          onclick="
+            switchTab('direktori');
+            filterDistrict('Semarang Barat');
+            toggleMobileMenu();
+          "
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-50 hover:text-brand-600 flex items-center gap-3"
+        >
+          <i class="fa-solid fa-building-user text-brand-500 w-5"></i> Semarang
+          Barat (Kos & Hunian)
+        </button>
+        <button
+          onclick="
+            switchTab('mitra');
+            toggleMobileMenu();
+          "
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-50 hover:text-brand-600 flex items-center gap-3"
+        >
+          <i class="fa-solid fa-handshake text-brand-500 w-5"></i> Paket
+          Langganan Mitra
+        </button>
+        <button
+          onclick="
+            switchTab('profil');
+            toggleMobileMenu();
+          "
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-50 hover:text-brand-600 flex items-center gap-3"
+        >
+          <i class="fa-solid fa-circle-info text-brand-500 w-5"></i> Profil &
+          Strategic Rationale
+        </button>
+        <div class="pt-2 border-t border-slate-100 flex gap-2">
+          <button
+            onclick="openJoinMitraModal('Basic Mitra')"
+            class="flex-1 bg-brand-600 text-white text-center py-2.5 rounded-xl font-bold text-xs"
+          >
+            Gabung Mitra
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= TAB 1: DIREKTORI MAIN PAGE ================= -->
+    <div id="tab-direktori" class="tab-content flex-grow">
+      <!-- Hero Banner -->
+      <section
+        class="relative bg-gradient-to-b from-brand-900 via-brand-800 to-brand-700 text-white pt-12 pb-20 px-4 overflow-hidden"
+      >
+        <!-- Background Shapes -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+          <div
+            class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white blur-3xl"
+          ></div>
+          <div
+            class="absolute top-1/2 right-0 w-80 h-80 rounded-full bg-brand-300 blur-3xl"
+          ></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+          <div
+            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-semibold text-brand-100 border border-white/15 shadow-inner"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+            ></span>
+            Direktori Laundry Terpercaya Semarang
+          </div>
+
+          <h1
+            class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight"
+          >
+            Cari & Hubungi Laundry Terdekat <br class="hidden sm:block" />
+            Cuma
+            <span class="text-amber-300 underline decoration-brand-400"
+              >Sekali Klik</span
+            >
+          </h1>
+
+          <p
+            class="text-slate-200 text-sm sm:text-base max-w-2xl mx-auto font-normal"
+          >
+            Solusi praktis mahasiswa & pekerja Semarang. Hemat waktu, baju
+            wangi, bebas apek, langsung terhubung via WhatsApp!
+          </p>
+
+          <!-- Search & Filter Card -->
+          <div class="max-w-3xl mx-auto pt-4">
+            <div
+              class="bg-white p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-2xl shadow-brand-900/40 text-slate-800 space-y-3"
+            >
+              <div class="flex flex-col sm:flex-row gap-2">
+                <div class="relative flex-grow">
+                  <i
+                    class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  ></i>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    oninput="renderLaundryList()"
+                    placeholder="Cari nama laundry, layanan (antar-jemput, kilat)..."
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all"
+                  />
+                </div>
+                <select
+                  id="sortSelect"
+                  onchange="renderLaundryList()"
+                  class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer"
+                >
+                  <option value="default">Urutkan: Rekomendasi</option>
+                  <option value="rating">Rating Tertinggi ⭐</option>
+                  <option value="harga-asc">
+                    Harga: Terendah ke Tertinggi
+                  </option>
+                  <option value="harga-desc">
+                    Harga: Tertinggi ke Terendah
+                  </option>
+                </select>
+              </div>
+
+              <!-- Tags Filter -->
+              <div
+                class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100"
+              >
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-slate-400 font-medium mr-1 text-[11px]"
+                    >Filter Cepat:</span
+                  >
+                  <button
+                    onclick="toggleTagFilter('Antar-Jemput')"
+                    id="tag-Antar-Jemput"
+                    class="tag-btn px-3 py-1 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all text-[11px] font-medium"
+                  >
+                    🚚 Gratis Antar-Jemput
+                  </button>
+                  <button
+                    onclick="toggleTagFilter('Kilat')"
+                    id="tag-Kilat"
+                    class="tag-btn px-3 py-1 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all text-[11px] font-medium"
+                  >
+                    ⚡ Kilat 1 Hari
+                  </button>
+                  <button
+                    onclick="toggleTagFilter('Satuan')"
+                    id="tag-Satuan"
+                    class="tag-btn px-3 py-1 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all text-[11px] font-medium"
+                  >
+                    👔 Cuci Satuan
+                  </button>
+                </div>
+                <span
+                  id="resultCount"
+                  class="text-[11px] font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md"
+                >
+                  Menampilkan 0 Mitra
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content Listing Section -->
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Area Badge Subheader -->
+        <div
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+        >
+          <div>
+            <h2
+              id="currentDistrictTitle"
+              class="text-2xl font-bold text-slate-900"
+            >
+              Daftar Mitra Laundry
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">
+              Daftar lengkap area Semarang Tengah & Semarang Barat
+            </p>
+          </div>
+
+          <div
+            class="flex items-center gap-2 bg-slate-200/60 p-1 rounded-xl text-xs font-semibold"
+          >
+            <button
+              onclick="filterDistrict('all')"
+              id="btn-dist-all"
+              class="district-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-700"
+            >
+              Semua
+            </button>
+            <button
+              onclick="filterDistrict('Semarang Tengah')"
+              id="btn-dist-tengah"
+              class="district-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900"
+            >
+              Semarang Tengah
+            </button>
+            <button
+              onclick="filterDistrict('Semarang Barat')"
+              id="btn-dist-barat"
+              class="district-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900"
+            >
+              Semarang Barat
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid Cards -->
+        <div
+          id="laundry-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- JS Render Item Cards -->
+        </div>
+
+        <!-- Empty State -->
+        <div
+          id="emptyState"
+          class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-300 p-8 my-6"
+        >
+          <div
+            class="w-16 h-16 bg-brand-50 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800 mb-1">
+            Tidak Ada Laundry Yang Ditemukan
+          </h3>
+          <p class="text-xs text-slate-500 max-w-md mx-auto mb-6">
+            Coba kata kunci lain atau hapus filter pencarian kamu untuk melihat
+            daftar lengkap.
+          </p>
+          <button
+            onclick="resetFilters()"
+            class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all"
+          >
+            Reset Filter Pencarian
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- ================= TAB 2: PAKET MITRA ================= -->
+    <div id="tab-mitra" class="tab-content hidden flex-grow">
+      <section
+        class="bg-gradient-to-b from-slate-900 to-slate-800 text-white py-16 px-4"
+      >
+        <div class="max-w-4xl mx-auto text-center space-y-4">
+          <span
+            class="bg-brand-500/20 text-brand-300 text-xs font-bold px-3 py-1 rounded-full border border-brand-400/30"
+            >Kemitraan NyuciYuk</span
+          >
+          <h1 class="text-3xl sm:text-4xl font-extrabold">
+            Kembangkan Usaha Laundry Anda di Semarang
+          </h1>
+          <p class="text-slate-300 text-sm max-w-2xl mx-auto">
+            Dapatkan puluhan pelanggan baru tiap hari dari kalangan mahasiswa
+            (Semarang Tengah) dan penghuni kos/pekerja (Semarang Barat).
+          </p>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Starter Plan -->
+          <div
+            class="bg-white rounded-3xl p-6 shadow-xl border border-slate-200 flex flex-col justify-between hover:shadow-2xl transition-all"
+          >
+            <div>
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-slate-400"
+                >Basic</span
+              >
+              <h3 class="text-xl font-bold text-slate-800 mt-1">
+                Mitra Gratis
+              </h3>
+              <div class="my-4">
+                <span class="text-3xl font-extrabold text-slate-900">Rp 0</span>
+                <span class="text-xs text-slate-500">/ selamanya</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">
+                Pas untuk laundry baru yang ingin terdaftar di direktori digital
+                NyuciYuk.
+              </p>
+              <ul class="space-y-3 text-xs text-slate-600">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Tampil di
+                  Direktori Utama
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Tombol
+                  Direct WhatsApp
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Integrasi
+                  Google Maps
+                </li>
+                <li class="flex items-center gap-2 text-slate-400">
+                  <i class="fa-solid fa-xmark"></i> Prioritas Atas Pencarian
+                </li>
+                <li class="flex items-center gap-2 text-slate-400">
+                  <i class="fa-solid fa-xmark"></i> Badge Mitra Terverifikasi
+                </li>
+              </ul>
+            </div>
+            <button
+              onclick="openJoinMitraModal('Basic Mitra')"
+              class="w-full mt-8 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 rounded-xl text-xs transition-all"
+            >
+              Daftar Gratis
+            </button>
+          </div>
+
+          <!-- Recommended Pro Plan -->
+          <div
+            class="bg-white rounded-3xl p-6 shadow-2xl border-2 border-brand-500 flex flex-col justify-between relative scale-105 z-10"
+          >
+            <div
+              class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-brand-500 text-white text-[10px] font-extrabold uppercase px-4 py-1 rounded-full shadow-md"
+            >
+              Paling Populer 🔥
+            </div>
+            <div>
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-brand-600"
+                >Pro Business</span
+              >
+              <h3 class="text-xl font-bold text-slate-800 mt-1">Pro Mitra</h3>
+              <div class="my-4">
+                <span class="text-3xl font-extrabold text-brand-700"
+                  >Rp 49.000</span
+                >
+                <span class="text-xs text-slate-500">/ bulan</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">
+                Meningkatkan kepercayaan calon pelanggan dan jangkauan orderan
+                bulanan.
+              </p>
+              <ul class="space-y-3 text-xs text-slate-600">
+                <li
+                  class="flex items-center gap-2 font-semibold text-slate-800"
+                >
+                  <i class="fa-solid fa-check text-emerald-500"></i> Semua Fitur
+                  Basic
+                </li>
+                <li
+                  class="flex items-center gap-2 font-semibold text-slate-800"
+                >
+                  <i class="fa-solid fa-check text-emerald-500"></i> Badge
+                  "Mitra Terverifikasi" ⭐
+                </li>
+                <li
+                  class="flex items-center gap-2 font-semibold text-slate-800"
+                >
+                  <i class="fa-solid fa-check text-emerald-500"></i> Tampil Link
+                  IG & Website
+                </li>
+                <li
+                  class="flex items-center gap-2 font-semibold text-slate-800"
+                >
+                  <i class="fa-solid fa-check text-emerald-500"></i> Highlight
+                  Promo & Diskon
+                </li>
+                <li class="flex items-center gap-2 text-slate-400">
+                  <i class="fa-solid fa-xmark"></i> Top Banner Recommendation
+                </li>
+              </ul>
+            </div>
+            <button
+              onclick="openJoinMitraModal('Pro Mitra')"
+              class="w-full mt-8 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-brand-600/30 transition-all"
+            >
+              Pilih Pro Mitra
+            </button>
+          </div>
+
+          <!-- Premium Plan -->
+          <div
+            class="bg-white rounded-3xl p-6 shadow-xl border border-slate-200 flex flex-col justify-between hover:shadow-2xl transition-all"
+          >
+            <div>
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-amber-500"
+                >VIP Spot</span
+              >
+              <h3 class="text-xl font-bold text-slate-800 mt-1">
+                Premium Mitra
+              </h3>
+              <div class="my-4">
+                <span class="text-3xl font-extrabold text-slate-900"
+                  >Rp 99.000</span
+                >
+                <span class="text-xs text-slate-500">/ bulan</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">
+                Dominasi penuh pencarian di wilayah Semarang Barat & Tengah.
+              </p>
+              <ul class="space-y-3 text-xs text-slate-600">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Semua Fitur
+                  Pro Mitra
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Posisi
+                  Teratas (Top Ranking)
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Promosi
+                  Khusus Sosial Media NyuciYuk
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Laporan
+                  Statistik Klik Order
+                </li>
+              </ul>
+            </div>
+            <button
+              onclick="openJoinMitraModal('Premium Mitra')"
+              class="w-full mt-8 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl text-xs transition-all"
+            >
+              Pilih Premium
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= TAB 3: PROFIL & RATIONALE ================= -->
+    <div id="tab-profil" class="tab-content hidden flex-grow">
+      <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+        <!-- About Hero -->
+        <div
+          class="bg-gradient-to-r from-brand-700 to-brand-500 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden"
+        >
+          <div class="max-w-2xl relative z-10 space-y-4">
+            <span
+              class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full border border-white/30"
+              >Tentang NyuciYuk</span
+            >
+            <h1 class="text-3xl sm:text-4xl font-extrabold">
+              Menghubungkan Pencuci & Pemilik Laundry Tanpa Ribet
+            </h1>
+            <p class="text-brand-100 text-xs sm:text-sm leading-relaxed">
+              NyuciYuk hadir sebagai direktori terintegrasi untuk memudahkan
+              mahasiswa, pekerja, dan masyarakat Kota Semarang menemukan jasa
+              laundry terbaik yang sesuai dengan kebutuhan lokasi, budget, dan
+              kecepatan layanan.
+            </p>
+          </div>
+        </div>
+
+        <!-- Strategic Rationale Section -->
+        <div class="space-y-6">
+          <div class="border-l-4 border-brand-600 pl-4">
+            <h2 class="text-xl font-bold text-slate-900">
+              Rasional Strategis Pemilihan Wilayah
+            </h2>
+            <p class="text-xs text-slate-500">
+              Mengapa NyuciYuk Berfokus Pada Semarang Tengah & Semarang Barat?
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3"
+            >
+              <div
+                class="w-10 h-10 bg-blue-100 text-brand-600 rounded-xl flex items-center justify-center font-bold text-lg"
+              >
+                🎓
+              </div>
+              <h3 class="font-bold text-slate-800 text-base">
+                Semarang Tengah (Fokus Kampus & Mahasiswa)
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Kawasan padat kampus (seperti area Sekaran/Sampangan & pusat
+                kota) memiliki populasi mahasiswa kost yang sangat tinggi.
+                Karakteristik konsumen: butuh harga ramah kantong, pengerjaan
+                cepat kilat, dan fasilitas antar-jemput gratis karena
+                keterbatasan transportasi.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3"
+            >
+              <div
+                class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg"
+              >
+                🏢
+              </div>
+              <h3 class="font-bold text-slate-800 text-base">
+                Semarang Barat (Fokus Pekerja & Hunian)
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Pusat aktivitas bisnis, hunian, dan perkantoran (dekat bandara,
+                Krapyak, Koridor Siliwangi). Karakteristik konsumen: pekerja
+                sibuk yang mengutamakan kualitas cuci premium/satuan,
+                kepraktisan jam operasional, dan garansi wangi tahan lama.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pain & Gain Analysis -->
+        <div class="space-y-6">
+          <div class="border-l-4 border-amber-500 pl-4">
+            <h2 class="text-xl font-bold text-slate-900">
+              Analisis Pain & Gain
+            </h2>
+            <p class="text-xs text-slate-500">
+              Solusi Nyata Yang Dihadirkan Oleh NyuciYuk
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Consumer Perspective -->
+            <div
+              class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4"
+            >
+              <h3
+                class="font-bold text-slate-800 flex items-center gap-2 text-sm border-b pb-3"
+              >
+                <i class="fa-solid fa-user-graduate text-brand-600"></i> Sisi
+                Konsumen (Mahasiswa & Pekerja)
+              </h3>
+              <div class="space-y-3 text-xs">
+                <div
+                  class="bg-red-50 p-3 rounded-xl border border-red-100 text-red-900"
+                >
+                  <span class="font-bold block mb-1">❌ Pain Point:</span>
+                  Sulit mencari laundry terdekat saat musim hujan, harga kurang
+                  transparan, sering tertukar pakaian, dan malas keluar kos.
+                </div>
+                <div
+                  class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"
+                >
+                  <span class="font-bold block mb-1"
+                    >✅ Gain Point NyuciYuk:</span
+                  >
+                  Dapat membandingkan harga/rating secara transparan, langsung
+                  chat WA toko tanpa catat nomor, serta filter gratis
+                  antar-jemput.
+                </div>
+              </div>
+            </div>
+
+            <!-- Laundry Owner Perspective -->
+            <div
+              class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4"
+            >
+              <h3
+                class="font-bold text-slate-800 flex items-center gap-2 text-sm border-b pb-3"
+              >
+                <i class="fa-solid fa-store text-emerald-600"></i> Sisi Pemilik
+                Usaha Laundry
+              </h3>
+              <div class="space-y-3 text-xs">
+                <div
+                  class="bg-red-50 p-3 rounded-xl border border-red-100 text-red-900"
+                >
+                  <span class="font-bold block mb-1">❌ Pain Point:</span>
+                  Toko sepi saat liburan kampus, biaya promosi cetak brosur
+                  mahal, dan kesulitan jangkau pelanggan di luar gang/jalan
+                  utama.
+                </div>
+                <div
+                  class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"
+                >
+                  <span class="font-bold block mb-1"
+                    >✅ Gain Point NyuciYuk:</span
+                  >
+                  Memiliki storefront digital cuma-cuma, menjangkau ribuan
+                  mahasiswa pencari laundry online, dan meningkatkan reputasi
+                  via rating.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer
+      class="bg-slate-900 text-slate-400 text-xs py-12 border-t border-slate-800 mt-auto"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-slate-800"
+        >
+          <div>
+            <div
+              class="flex items-center gap-2 text-white font-bold text-lg mb-1"
+            >
+              <i class="fa-solid fa-soap text-brand-500"></i> NyuciYuk Semarang
+            </div>
+            <p class="text-slate-500 text-xs">
+              Direktori & Mesin Pencari Laundry Semarang Tengah & Barat.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-4 text-xs font-medium">
+            <button
+              onclick="switchTab('direktori')"
+              class="hover:text-white transition"
+            >
+              Direktori
+            </button>
+            <button
+              onclick="switchTab('mitra')"
+              class="hover:text-white transition"
+            >
+              Paket Kemitraan
+            </button>
+            <button
+              onclick="switchTab('profil')"
+              class="hover:text-white transition"
+            >
+              Tentang Kami
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-slate-500"
+        >
+          <p>© 2026 NyuciYuk Indonesia. All rights reserved.</p>
+
+          <!-- Secret Discreet Admin Link -->
+          <button
+            onclick="openAdminModal()"
+            class="hover:text-brand-400 transition flex items-center gap-1 opacity-70 hover:opacity-100"
+          >
+            <i class="fa-solid fa-lock text-[10px]"></i> Portal Mitra / Admin
+            Input
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================= MODAL 1: SECRET ADMIN INPUT ================= -->
+    <div
+      id="adminModal"
+      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden my-8 transform transition-all"
+      >
+        <div
+          class="bg-slate-900 text-white p-6 flex justify-between items-center"
+        >
+          <div>
+            <h3 class="font-bold text-base flex items-center gap-2">
+              <i class="fa-solid fa-user-shield text-brand-400"></i> Portal
+              Admin - Tambah Laundry
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Input data mitra langsung ke direktori NyuciYuk
+            </p>
+          </div>
+          <button
+            onclick="closeAdminModal()"
+            class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form
+          id="formAdminLaundry"
+          onsubmit="handleAdminSubmit(event)"
+          class="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar"
+        >
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Nama Tempat Laundry *</label
+            >
+            <input
+              type="text"
+              id="adm-nama"
+              placeholder="Contoh: Barokah Clean Express"
+              required
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 outline-none"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Wilayah / Area *</label
+              >
+              <select
+                id="adm-wilayah"
+                required
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none bg-white"
+              >
+                <option value="Semarang Tengah">
+                  Semarang Tengah (Kampus)
+                </option>
+                <option value="Semarang Barat">
+                  Semarang Barat (Kos/Hunian)
+                </option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Harga Layanan Utama *</label
+              >
+              <input
+                type="text"
+                id="adm-harga"
+                placeholder="Contoh: Rp 6.000 / kg"
+                required
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Detail Layanan (Pisahkan Koma) *</label
+            >
+            <input
+              type="text"
+              id="adm-layanan"
+              placeholder="Cuci Komplit, Gratis Antar-Jemput, Kilat 1 Hari"
+              required
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Nomor WhatsApp (Awali 62) *</label
+              >
+              <input
+                type="text"
+                id="adm-whatsapp"
+                placeholder="6281234567890"
+                required
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Link Google Maps *</label
+              >
+              <input
+                type="url"
+                id="adm-maps"
+                placeholder="https://maps.google.com/..."
+                required
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Website (Opsional)</label
+              >
+              <input
+                type="url"
+                id="adm-website"
+                placeholder="https://laundryku.com"
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1"
+                >Instagram (Opsional)</label
+              >
+              <input
+                type="text"
+                id="adm-instagram"
+                placeholder="@laundryku.smg"
+                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Ulasan / Rating Singkat *</label
+            >
+            <input
+              type="text"
+              id="adm-ulasan"
+              placeholder="⭐ 4.9 (120+ ulasan) - Pelayanan ramah & wangi"
+              required
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Foto Tempat Laundry *</label
+            >
+            <input
+              type="file"
+              id="adm-fotoFile"
+              accept="image/*"
+              required
+              class="w-full border border-slate-200 p-2 rounded-xl bg-slate-50 text-xs"
+            />
+            <p class="text-[10px] text-slate-400 mt-1">
+              Upload foto toko/spanduk/layanan langsung dari galeri.
+            </p>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-brand-600/25 transition-all text-xs"
+            >
+              + Simpan & Terbitkan Ke Web
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL 2: REGISTRASI MITRA ================= -->
+    <div
+      id="joinMitraModal"
+      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
+    >
+      <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl p-6 relative">
+        <button
+          onclick="closeJoinMitraModal()"
+          class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-800 flex items-center justify-center"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="text-center space-y-2 mb-6">
+          <div
+            class="w-12 h-12 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mx-auto text-xl"
+          >
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-800">
+            Daftar Paket
+            <span id="selectedPlanName" class="text-brand-600">Pro Mitra</span>
+          </h3>
+          <p class="text-xs text-slate-500">
+            Hubungi Admin NyuciYuk via WhatsApp untuk verifikasi pendaftaran
+            mitra.
+          </p>
+        </div>
+
+        <form onsubmit="handleJoinMitraWhatsApp(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Nama Usaha Laundry</label
+            >
+            <input
+              type="text"
+              id="reg-nama"
+              required
+              placeholder="Contoh: Fresh Clean Laundry"
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Wilayah Usaha</label
+            >
+            <select
+              id="reg-wilayah"
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+            >
+              <option value="Semarang Tengah">Semarang Tengah</option>
+              <option value="Semarang Barat">Semarang Barat</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1"
+              >Nomor WA Pemilik</label
+            >
+            <input
+              type="text"
+              id="reg-wa"
+              required
+              placeholder="08123456789"
+              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-500/20 text-xs transition-all flex items-center justify-center gap-2"
+          >
+            <i class="fa-brands fa-whatsapp text-lg"></i> Lanjutkan via WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+      // Initial Sample Data (Pre-loaded so page is never empty)
+      const initialSampleData = [
+        {
+          nama: "Laundry Barokah Express",
+          wilayah: "Semarang Tengah",
+          harga: "Rp 6.000 / kg",
+          layanan: "Cuci Komplit, Gratis Antar-Jemput, Kilat 1 Hari",
+          whatsapp: "6281234567890",
+          maps: "https://maps.google.com",
+          website: "https://nyuciyuk.com",
+          instagram: "@barokahlaundry_smg",
+          ulasan: "⭐ 4.9 (140+ ulasan) - Pelayanan cepat & wangi tahan lama",
+          foto: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80",
+          ratingVal: 4.9,
+          hargaVal: 6000,
+        },
+        {
+          nama: "Fresh & Clean Laundry",
+          wilayah: "Semarang Barat",
+          harga: "Rp 5.500 / kg",
+          layanan: "Cuci Satuan, Antar-Jemput, Bebas Apek",
+          whatsapp: "6289876543210",
+          maps: "https://maps.google.com",
+          website: "",
+          instagram: "@freshclean_smg",
+          ulasan: "⭐ 4.8 (95+ ulasan) - Hasil setrika sangat rapi",
+          foto: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=600&auto=format&fit=crop&q=80",
+          ratingVal: 4.8,
+          hargaVal: 5500,
+        },
+        {
+          nama: "Garis Bersih Laundry Kampus",
+          wilayah: "Semarang Tengah",
+          harga: "Rp 5.000 / kg",
+          layanan: "Paket Hemat Mahasiswa, Kilat 1 Hari",
+          whatsapp: "6285712345678",
+          maps: "https://maps.google.com",
+          website: "",
+          instagram: "@garisbersih_laundry",
+          ulasan: "⭐ 4.7 (80+ ulasan) - Murah banget buat anak kos",
+          foto: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&auto=format&fit=crop&q=80",
+          ratingVal: 4.7,
+          hargaVal: 5000,
+        },
+        {
+          nama: "Siliwangi Premium Laundry",
+          wilayah: "Semarang Barat",
+          harga: "Rp 8.000 / kg",
+          layanan: "Cuci Satuan, Express 6 Jam, Parfume Import",
+          whatsapp: "6282133445566",
+          maps: "https://maps.google.com",
+          website: "https://nyuciyuk.com",
+          instagram: "@siliwangilaundry",
+          ulasan:
+            "⭐ 5.0 (210+ ulasan) - Sangat profesional untuk pakaian kerja",
+          foto: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=600&auto=format&fit=crop&q=80",
+          ratingVal: 5.0,
+          hargaVal: 8000,
+        },
+      ];
+
+      // Global State
+      let activeDistrict = "all";
+      let selectedTag = null;
+
+      // Load Data from LocalStorage or initialize
+      function getLaundryData() {
+        const stored = localStorage.getItem("nyuciYukData");
+        if (!stored) {
+          localStorage.setItem(
+            "nyuciYukData",
+            JSON.stringify(initialSampleData),
+          );
+          return initialSampleData;
+        }
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          return initialSampleData;
+        }
+      }
+
+      // Tab Switcher
+      function switchTab(tabId) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((el) => el.classList.add("hidden"));
+        document.getElementById(`tab-${tabId}`).classList.remove("hidden");
+
+        // Update Nav States
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("bg-white", "text-brand-700", "shadow-sm");
+          btn.classList.add("text-slate-600");
+        });
+
+        const activeNav = document.getElementById(
+          `nav-${tabId === "direktori" ? "semua" : tabId}`,
+        );
+        if (activeNav) {
+          activeNav.classList.add("bg-white", "text-brand-700", "shadow-sm");
+          activeNav.classList.remove("text-slate-600");
+        }
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Filter District
+      function filterDistrict(district) {
+        activeDistrict = district;
+
+        // Update buttons
+        document.querySelectorAll(".district-btn").forEach((btn) => {
+          btn.classList.remove("bg-white", "shadow-sm", "text-brand-700");
+          btn.classList.add("text-slate-600");
+        });
+
+        if (district === "all") {
+          document
+            .getElementById("btn-dist-all")
+            .classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText =
+            "Daftar Mitra Laundry Semarang";
+        } else if (district === "Semarang Tengah") {
+          document
+            .getElementById("btn-dist-tengah")
+            .classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText =
+            "Mitra Laundry - Semarang Tengah (Area Kampus)";
+        } else if (district === "Semarang Barat") {
+          document
+            .getElementById("btn-dist-barat")
+            .classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText =
+            "Mitra Laundry - Semarang Barat (Area Kos & Hunian)";
+        }
+
+        renderLaundryList();
+      }
+
+      // Tag Filter Toggle
+      function toggleTagFilter(tagName) {
+        if (selectedTag === tagName) {
+          selectedTag = null;
+        } else {
+          selectedTag = tagName;
+        }
+
+        document.querySelectorAll(".tag-btn").forEach((btn) => {
+          btn.classList.remove(
+            "bg-brand-600",
+            "text-white",
+            "border-brand-600",
+          );
+          btn.classList.add("border-slate-200", "text-slate-600");
+        });
+
+        if (selectedTag) {
+          const activeBtn = document.getElementById(`tag-${selectedTag}`);
+          if (activeBtn) {
+            activeBtn.classList.add(
+              "bg-brand-600",
+              "text-white",
+              "border-brand-600",
+            );
+            activeBtn.classList.remove("border-slate-200", "text-slate-600");
+          }
+        }
+
+        renderLaundryList();
+      }
+
+      function resetFilters() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("sortSelect").value = "default";
+        selectedTag = null;
+        activeDistrict = "all";
+        filterDistrict("all");
+      }
+
+      // Main Render Function
+      function renderLaundryList() {
+        const allData = getLaundryData();
+        const searchQuery = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const sortVal = document.getElementById("sortSelect").value;
+
+        let filtered = allData.filter((item) => {
+          // District filter
+          const matchDistrict =
+            activeDistrict === "all" ||
+            item.wilayah.toLowerCase().includes(activeDistrict.toLowerCase());
+
+          // Search query filter
+          const matchSearch =
+            item.nama.toLowerCase().includes(searchQuery) ||
+            item.layanan.toLowerCase().includes(searchQuery) ||
+            item.wilayah.toLowerCase().includes(searchQuery);
+
+          // Tag filter
+          const matchTag =
+            !selectedTag ||
+            item.layanan.toLowerCase().includes(selectedTag.toLowerCase());
+
+          return matchDistrict && matchSearch && matchTag;
+        });
+
+        // Sorting
+        if (sortVal === "harga-asc") {
+          filtered.sort((a, b) => (a.hargaVal || 6000) - (b.hargaVal || 6000));
+        } else if (sortVal === "harga-desc") {
+          filtered.sort((a, b) => (b.hargaVal || 6000) - (a.hargaVal || 6000));
+        } else if (sortVal === "rating") {
+          filtered.sort((a, b) => (b.ratingVal || 4.5) - (a.ratingVal || 4.5));
+        }
+
+        // UI Update
+        const grid = document.getElementById("laundry-grid");
+        const emptyState = document.getElementById("emptyState");
+        document.getElementById("resultCount").innerText =
+          `Menampilkan ${filtered.length} Mitra`;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = "";
+          emptyState.classList.remove("hidden");
+          return;
+        }
+
+        emptyState.classList.add("hidden");
+        grid.innerHTML = filtered
+          .map((item) => {
+            // Parse services into badges
+            const servicesArray = item.layanan.split(",").map((s) => s.trim());
+            const serviceBadges = servicesArray
+              .map(
+                (s) =>
+                  `<span class="bg-slate-100 text-slate-700 text-[10px] font-medium px-2.5 py-1 rounded-md inline-block mr-1 mb-1">✨ ${s}</span>`,
+              )
+              .join("");
+
+            const isTengah = item.wilayah.includes("Tengah");
+            const badgeColor = isTengah
+              ? "bg-blue-100 text-blue-800"
+              : "bg-emerald-100 text-emerald-800";
+
+            return `
+          <div class="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group">
             
-            <!-- Foto Tempat Laundry -->
-            <img src="${item.foto}" alt="${item.nama}" class="w-full h-48 object-cover">
-            
-            <div class="p-5 flex-1 flex flex-col justify-between">
+            <!-- Image Header -->
+            <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+              <img src="${item.foto}" alt="${item.nama}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80'">
+              <div class="absolute top-3 left-3">
+                <span class="${badgeColor} text-[10px] font-bold px-3 py-1 rounded-full shadow-sm backdrop-blur-md">
+                  <i class="fa-solid fa-location-dot mr-1"></i>${item.wilayah}
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-300 font-extrabold text-xs px-3 py-1 rounded-full shadow-md">
+                ${item.harga}
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div>
-                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-semibold mb-2">${item.wilayah}</span>
-                <h2 class="text-xl font-bold text-gray-800">${item.nama}</h2>
-                <p class="text-green-600 font-bold mt-1">${item.harga}</p>
-                <p class="text-sm text-gray-600 mt-2">✨ ${item.layanan}</p>
-                
-                <!-- Informasi Tambahan (Ulasan, IG, Web) -->
-                <div class="mt-3 pt-3 border-t text-xs text-gray-500 space-y-1">
-                  <p>💬 <b>Ulasan:</b> ${item.ulasan}</p>
-                  <p>📷 <b>IG:</b> ${item.instagram}</p>
-                  ${item.website !== '#' ? `<p>🌐 <b>Web:</b> <a href="${item.website}" target="_blank" class="text-blue-500 underline">Kunjungi Website</a></p>` : ''}
+                <h3 class="text-lg font-bold text-slate-800 group-hover:text-brand-600 transition-colors">${item.nama}</h3>
+                <p class="text-xs text-amber-600 font-semibold mt-1 flex items-center gap-1">
+                  ${item.ulasan}
+                </p>
+
+                <!-- Services Badges -->
+                <div class="mt-3">
+                  ${serviceBadges}
+                </div>
+
+                <!-- Socials & Web -->
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                  <span class="flex items-center gap-1.5"><i class="fa-brands fa-instagram text-pink-500"></i> ${item.instagram || "-"}</span>
+                  ${item.website && item.website !== "#" ? `<a href="${item.website}" target="_blank" class="text-brand-600 font-semibold hover:underline flex items-center gap-1"><i class="fa-solid fa-globe"></i> Web</a>` : ""}
                 </div>
               </div>
 
-              <!-- Tombol Aksi (WA & Maps) -->
-              <div class="mt-5 flex gap-2">
-                <a href="https://wa.me/${item.whatsapp}?text=Halo%20NyuciYuk,%20mau%20tanya%20jasa%20laundry" target="_blank" class="flex-1 bg-green-500 hover:bg-green-600 text-white text-center py-2 rounded-lg font-medium text-sm transition">Hubungi WA</a>
-                <a href="${item.maps}" target="_blank" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm transition">Maps</a>
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-2 gap-2 pt-2">
+                <a href="https://wa.me/${item.whatsapp}?text=Halo%20${encodeURIComponent(item.nama)},%20saya%20menemukan%20laundry%20Anda%20di%20NyuciYuk.%20Mau%20tanya%20layanan..." target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs text-center transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5">
+                  <i class="fa-brands fa-whatsapp text-sm"></i> Chat WA
+                </a>
+                <a href="${item.maps}" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-map-location-dot text-slate-500"></i> Maps
+                </a>
               </div>
+
             </div>
 
           </div>
         `;
-      });
-    }
-  </script>
+          })
+          .join("");
+      }
 
-</body>
+      // Modal Helpers
+      function openAdminModal() {
+        document.getElementById("adminModal").classList.remove("hidden");
+      }
+      function closeAdminModal() {
+        document.getElementById("adminModal").classList.add("hidden");
+      }
+
+      function openJoinMitraModal(planName) {
+        document.getElementById("selectedPlanName").innerText = planName;
+        document.getElementById("joinMitraModal").classList.remove("hidden");
+      }
+      function closeJoinMitraModal() {
+        document.getElementById("joinMitraModal").classList.add("hidden");
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Admin Submit Handler
+      function handleAdminSubmit(e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById("adm-fotoFile");
+        const file = fileInput.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (event) {
+            const hargaRaw = document.getElementById("adm-harga").value;
+            // Extract numeric digits for sorting
+            const numericHarga =
+              parseInt(hargaRaw.replace(/[^0-9]/g, "")) || 6000;
+
+            const newMitra = {
+              nama: document.getElementById("adm-nama").value,
+              wilayah: document.getElementById("adm-wilayah").value,
+              harga: hargaRaw,
+              layanan: document.getElementById("adm-layanan").value,
+              whatsapp: document.getElementById("adm-whatsapp").value,
+              maps: document.getElementById("adm-maps").value,
+              website: document.getElementById("adm-website").value || "#",
+              instagram: document.getElementById("adm-instagram").value || "-",
+              ulasan: document.getElementById("adm-ulasan").value,
+              foto: event.target.result,
+              ratingVal: 4.9,
+              hargaVal: numericHarga,
+            };
+
+            const currentData = getLaundryData();
+            currentData.unshift(newMitra); // Add to top
+            localStorage.setItem("nyuciYukData", JSON.stringify(currentData));
+
+            alert("Berhasil menambah data laundry baru ke NyuciYuk!");
+            closeAdminModal();
+            document.getElementById("formAdminLaundry").reset();
+
+            // Switch to directory and render
+            switchTab("direktori");
+            filterDistrict("all");
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // Join Mitra WhatsApp Trigger
+      function handleJoinMitraWhatsApp(e) {
+        e.preventDefault();
+        const nama = document.getElementById("reg-nama").value;
+        const wilayah = document.getElementById("reg-wilayah").value;
+        const wa = document.getElementById("reg-wa").value;
+        const plan = document.getElementById("selectedPlanName").innerText;
+
+        const text = `Halo Admin NyuciYuk! Saya berminat mendaftarkan laundry saya.\n\n*Nama Usaha:* ${nama}\n*Wilayah:* ${wilayah}\n*Nomor WA:* ${wa}\n*Paket Pilihan:* ${plan}`;
+        window.open(
+          `https://wa.me/6281234567890?text=${encodeURIComponent(text)}`,
+          "_blank",
+        );
+        closeJoinMitraModal();
+      }
+
+      // Initialize on Load
+      window.onload = function () {
+        renderLaundryList();
+      };
+    </script>
+  </body>
 </html>
