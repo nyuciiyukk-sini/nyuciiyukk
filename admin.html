@@ -3,157 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Tambah Mitra Laundry</title>
-  <!-- Tailwind CSS & CDN Supabase -->
+  <title>Admin - NyuciYuk</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 font-sans p-4 md:p-8 text-gray-800">
+<body class="bg-gray-100 p-6 flex justify-center items-center min-h-screen">
 
-  <div class="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-md border border-gray-100">
-    <!-- Header Admin -->
-    <div class="flex justify-between items-center mb-6 border-b pb-4">
+  <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl my-8">
+    <h1 class="text-2xl font-bold text-blue-600 text-center mb-6">🧺 Input Data Laundry</h1>
+    
+    <form id="formLaundry" class="space-y-4">
       <div>
-        <h1 class="text-2xl font-bold text-blue-600">🧺 Form Admin NyuciYuk</h1>
-        <p class="text-xs text-gray-500 mt-1">Tambah data mitra laundry baru langsung ke website</p>
+        <label class="block text-sm font-semibold mb-1">Nama Tempat Laundry</label>
+        <input type="text" id="nama" placeholder="Contoh: Laundry Barokah Express" required class="w-full border p-2.5 rounded-lg outline-none">
       </div>
-      <a href="index.html" class="text-xs bg-gray-100 text-gray-700 px-3 py-2 rounded-xl font-semibold hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-1">
-        <i class="fa-solid fa-eye"></i> Lihat Web Utama
-      </a>
-    </div>
 
-    <!-- Alert Notifikasi Status Simpan -->
-    <div id="alert" class="hidden mb-4 p-4 rounded-xl text-sm font-medium"></div>
-
-    <!-- FORM INPUT KOSONG (TINGGAL KETIK/PASTE) -->
-    <form id="laundry-form" class="space-y-4">
-
-      <!-- Nama Laundry -->
       <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1">Nama Tempat Laundry <span class="text-red-500">*</span></label>
-        <input type="text" id="name" required placeholder="Contoh: Nyuci Kilat Tembalang" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        <label class="block text-sm font-semibold mb-1">Wilayah / Area</label>
+        <select id="wilayah" class="w-full border p-2.5 rounded-lg outline-none">
+          <option value="Semarang Tengah (Area Kampus)">Semarang Tengah (Area Kampus)</option>
+          <option value="Semarang Barat (Area Kos)">Semarang Barat (Area Kos)</option>
+        </select>
       </div>
 
-      <!-- No WA & Harga -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
-          <input type="text" id="phone" required placeholder="6281234567890 (Gunakan kode 62)" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-        </div>
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-1">Harga per Kg (Rp)</label>
-          <input type="number" id="price" placeholder="6000" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-        </div>
-      </div>
-
-      <!-- Alamat -->
       <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1">Alamat Lengkap / Wilayah <span class="text-red-500">*</span></label>
-        <input type="text" id="address" required placeholder="Jl. Tembalang Baru No. 12, Semarang Tengah" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        <label class="block text-sm font-semibold mb-1">Harga Layanan</label>
+        <input type="text" id="harga" placeholder="Contoh: Rp 6.000 / kg" required class="w-full border p-2.5 rounded-lg outline-none">
       </div>
 
-      <!-- Layanan -->
       <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1">Layanan (Pisahkan Koma)</label>
-        <input type="text" id="services" placeholder="Kiloan, Express 3 Jam, Sepatu, Boneka" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        <label class="block text-sm font-semibold mb-1">Detail Layanan</label>
+        <input type="text" id="layanan" placeholder="Contoh: Cuci Komplit + Antar-Jemput" required class="w-full border p-2.5 rounded-lg outline-none">
       </div>
 
-      <!-- Link Foto -->
       <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1">URL / Link Foto Laundry 🖼️</label>
-        <input type="url" id="image_url" placeholder="https://images.unsplash.com/photo-..." class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-        <p class="text-[11px] text-gray-400 mt-1">Copy & paste link alamat gambar dari Google Maps / Internet</p>
+        <label class="block text-sm font-semibold mb-1">Nomor WhatsApp (Awali 62)</label>
+        <input type="text" id="whatsapp" placeholder="Contoh: 6281234567890" required class="w-full border p-2.5 rounded-lg outline-none">
       </div>
 
-      <!-- Link Sosmed & Maps -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Link Google Maps 📍</label>
-          <input type="url" id="maps_url" placeholder="https://maps.google.com/..." class="w-full border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Link Instagram 📷</label>
-          <input type="url" id="instagram_url" placeholder="https://instagram.com/..." class="w-full border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Link Website 🌐</label>
-          <input type="url" id="website_url" placeholder="https://nyucikilat.id" class="w-full border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs">
-        </div>
-      </div>
-
-      <!-- Rating & Ulasan -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-1">Rating ⭐ (1.0 - 5.0)</label>
-          <input type="number" step="0.1" id="rating" placeholder="4.9" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-        </div>
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-1">Jumlah Ulasan / Review</label>
-          <input type="number" id="reviews_count" placeholder="85" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-        </div>
-      </div>
-
-      <!-- Catatan Testimoni -->
       <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1">Ulasan Singkat / Testimoni Pelanggan 💬</label>
-        <textarea id="review_text" rows="2" placeholder="Pelayanan cepat, baju wangi, dan pengerjaan rapi sekali!" class="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"></textarea>
+        <label class="block text-sm font-semibold mb-1">Link Google Maps</label>
+        <input type="url" id="maps" placeholder="https://maps.google.com/..." required class="w-full border p-2.5 rounded-lg outline-none">
       </div>
 
-      <!-- Tombol Simpan -->
-      <button type="submit" id="btn-submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow text-sm flex items-center justify-center gap-2">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan & Tayangkan Data Laundry
+      <div>
+        <label class="block text-sm font-semibold mb-1">Website (Opsional)</label>
+        <input type="url" id="website" placeholder="https://laundrybarokah.com" class="w-full border p-2.5 rounded-lg outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Instagram (Opsional)</label>
+        <input type="text" id="instagram" placeholder="Contoh: @laundrybarokah" class="w-full border p-2.5 rounded-lg outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Ulasan / Rating Singkat</label>
+        <input type="text" id="ulasan" placeholder="Contoh: ⭐ 4.9 (120+ ulasan) - Pelayanan cepat" required class="w-full border p-2.5 rounded-lg outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Foto Tempat Laundry</label>
+        <input type="file" id="fotoFile" accept="image/*" required class="w-full border p-2 rounded-lg bg-gray-50 text-sm">
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow transition mt-4">
+        + Tambah Mitra Laundry
       </button>
-
     </form>
+    
+    <a href="index.html" class="block text-center text-sm text-blue-500 mt-4 hover:underline">← Lihat Hasil di Web Utama</a>
   </div>
 
   <script>
-    const SUPABASE_URL = 'https://rzqgnoysthpxgfxscruo.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6cWdub3lzdGhweGdmeHNjcnVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNjMwMjEsImV4cCI6MjEwNzYzOTAyMX0.-6Ces2KK3JBvWBiX-KuN_dyg3NxYzG1nuxg9fhSuir0';
-    
-    const { createClient } = window.supabase;
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const form = document.getElementById('laundry-form');
-    const alertBox = document.getElementById('alert');
-    const btnSubmit = document.getElementById('btn-submit');
-
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('formLaundry').addEventListener('submit', function(e) {
       e.preventDefault();
-      btnSubmit.innerText = '⏳ Sedang Menyimpan Data...';
-      btnSubmit.disabled = true;
 
-      const payload = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        price: document.getElementById('price').value ? parseInt(document.getElementById('price').value) : null,
-        address: document.getElementById('address').value,
-        services: document.getElementById('services').value || null,
-        image_url: document.getElementById('image_url').value || null,
-        maps_url: document.getElementById('maps_url').value || null,
-        instagram_url: document.getElementById('instagram_url').value || null,
-        website_url: document.getElementById('website_url').value || null,
-        rating: document.getElementById('rating').value ? parseFloat(document.getElementById('rating').value) : null,
-        reviews_count: document.getElementById('reviews_count').value ? parseInt(document.getElementById('reviews_count').value) : null,
-        review_text: document.getElementById('review_text').value || null
-      };
+      const fileInput = document.getElementById('fotoFile');
+      const file = fileInput.files[0];
 
-      const { data, error } = await supabase.from('laundry').insert([payload]);
+      if (file) {
+        const reader = new FileReader();
 
-      if (error) {
-        alertBox.className = "mb-4 p-4 rounded-xl text-sm font-medium bg-red-100 text-red-700 block border border-red-200";
-        alertBox.innerText = "❌ Gagal menyimpan: " + error.message;
-      } else {
-        alertBox.className = "mb-4 p-4 rounded-xl text-sm font-medium bg-green-100 text-green-700 block border border-green-200";
-        alertBox.innerText = "🎉 Berhasil! Data laundry baru sudah tersimpan dan otomatis tayang di web!";
-        form.reset();
+        reader.onload = function(event) {
+          const laundryBaru = {
+            nama: document.getElementById('nama').value,
+            wilayah: document.getElementById('wilayah').value,
+            harga: document.getElementById('harga').value,
+            layanan: document.getElementById('layanan').value,
+            whatsapp: document.getElementById('whatsapp').value,
+            maps: document.getElementById('maps').value,
+            website: document.getElementById('website').value || '#',
+            instagram: document.getElementById('instagram').value || '-',
+            ulasan: document.getElementById('ulasan').value,
+            foto: event.target.result
+          };
+
+          // Simpan data langsung ke memori lokal browser
+          let daftarLaundry = JSON.parse(localStorage.getItem('nyuciYukData')) || [];
+          daftarLaundry.push(laundryBaru);
+          localStorage.setItem('nyuciYukData', JSON.stringify(daftarLaundry));
+
+          alert('Berhasil menambah data laundry baru!');
+          window.location.href = 'index.html'; // Pindah otomatis ke halaman utama
+        };
+
+        reader.readAsDataURL(file);
       }
-
-      btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan & Tayangkan Data Laundry';
-      btnSubmit.disabled = false;
     });
   </script>
 </body>
-  </html>
-  
+</html>
