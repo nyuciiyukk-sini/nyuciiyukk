@@ -1,2 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Cloud - NyuciYuk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-slate-100 min-h-screen p-4 sm:p-8 font-sans">
 
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <!-- HEADER ADMIN -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900 text-white p-6 rounded-2xl shadow-lg gap-4">
+      <div>
+        <h1 class="text-2xl font-extrabold flex items-center gap-2">
+          <i class="fa-solid fa-cloud text-blue-400"></i> Portal Admin NyuciYuk
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">Sinkronisasi Cloud Firebase Real-Time (Lintas Perangkat)</p>
+      </div>
+      <a href="index.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center gap-2">
+        <i class="fa-solid fa-globe"></i> Lihat Web Utama (index.html)
+      </a>
+    </div>
+
+    <!-- FORM INPUT LAUNDRY BARU -->
+    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
+      <h2 class="text-lg font-bold mb-4 text-slate-800 border-b pb-2 flex items-center gap-2">
+        <i class="fa-solid fa-plus-circle text-blue-600"></i> Tambah Data Laundry Baru
+      </h2>
+      
+      <form id="formAdminLaundry" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Nama Tempat Laundry *</label>
+          <input type="text" id="adm-nama" placeholder="Contoh: Barokah Clean Express" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs focus:ring-2 focus:ring-blue-500 outline-none" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Wilayah / Area *</label>
+            <select id="adm-wilayah" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none bg-white">
+              <option value="Semarang Tengah">Semarang Tengah (Kampus)</option>
+              <option value="Semarang Barat">Semarang Barat (Kos/Hunian)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Harga Layanan Utama *</label>
+            <input type="text" id="adm-harga" placeholder="Contoh: Rp 6.000 / kg" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Detail Layanan (Pisahkan Koma) *</label>
+          <input type="text" id="adm-layanan" placeholder="Cuci Komplit, Gratis Antar-Jemput, Kilat 1 Hari" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nomor WhatsApp (Awali 62, misal: 62812345678) *</label>
+            <input type="text" id="adm-whatsapp" placeholder="6281234567890" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Link Google Maps *</label>
+            <input type="url" id="adm-maps" placeholder="https://maps.google.com/..." required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Website (Opsional)</label>
+            <input type="url" id="adm-website" placeholder="https://laundryku.com" class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Instagram (Opsional)</label>
+            <input type="text" id="adm-instagram" placeholder="@laundryku.smg" class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Ulasan / Rating Singkat *</label>
+          <input type="text" id="adm-ulasan" placeholder="⭐ 4.9 (120+ ulasan) - Pelayanan ramah & wangi" required class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Foto Tempat Laundry *</label>
+          <input type="file" id="adm-fotoFile" accept="image/*" required class="w-full border border-slate-200 p-2 rounded-xl bg-slate-50 text-xs" />
+        </div>
+
+        <button type="submit" id="btnSubmit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Cloud Firebase
+        </button>
+      </form>
+    </div>
+
+    <!-- WADAH DAFTAR LAUNDRY & TOMBOL HAPUS -->
+    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
+      <div class="flex justify-between items-center mb-4 border-b pb-3">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-database text-blue-600"></i> Daftar Laundry di Cloud
+        </h2>
+        <span id="totalBadge" class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full text-xs">
+          Memuat data...
+        </span>
+      </div>
+
+      <div id="adminLaundryList" class="space-y-4">
+        <div class="text-center py-8 text-slate-400 text-xs">Menghubungkan ke database...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FIREBASE MODULE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC58DNPa4GHeYH4NADooVrkWh6Yb-l-YYI",
+      authDomain: "laundry-d7ebf.firebaseapp.com",
+      projectId: "laundry-d7ebf",
+      storageBucket: "laundry-d7ebf.firebasestorage.app",
+      messagingSenderId: "494244964604",
+      appId: "1:494244964604:web:37287bb8c3eec92f6a8f79",
+      measurementId: "G-DL3B5X55VR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const laundryCol = collection(db, "laundry_mitra");
+
+    // Kompres gambar otomatis agar muat di Firestore (< 1MB)
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const maxWidth = 600;
+            const scaleSize = maxWidth / img.width;
+            canvas.width = maxWidth;
+            canvas.height = img.height * scaleSize;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/jpeg", 0.7));
+          };
+        };
+      });
+    }
+
+    // Real-time listener membaca data dari Firebase
+    const q = query(laundryCol, orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const container = document.getElementById("adminLaundryList");
+      const badge = document.getElementById("totalBadge");
+      badge.textContent = `Total: ${snapshot.docs.length} Data`;
+
+      if (snapshot.docs.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-400 italic text-xs">Belum ada data di Cloud. Silakan isi form di atas!</div>`;
+        return;
+      }
+
+      container.innerHTML = snapshot.docs.map((docItem) => {
+        const item = docItem.data();
+        const id = docItem.id;
+        return `
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border border-slate-200 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition gap-4">
+            <div class="flex items-center gap-4">
+              <img src="${item.foto}" alt="${item.nama}" class="w-16 h-16 object-cover rounded-lg border bg-slate-200 flex-shrink-0" onerror="this.src='https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80'">
+              <div>
+                <h3 class="font-bold text-sm text-slate-800">${item.nama}</h3>
+                <div class="flex flex-wrap gap-2 text-[11px] text-slate-600 mt-1">
+                  <span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200">📍 ${item.wilayah}</span>
+                  <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">💰 ${item.harga}</span>
+                  <span class="bg-amber-50 text-amber-700 px-2 py-0.5 rounded border border-amber-200">📱 +${item.whatsapp}</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="deleteLaundry('${id}', '${item.nama.replace(/'/g, "\\'")}')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition flex items-center gap-1.5 self-end sm:self-center">
+              <i class="fa-solid fa-trash-can"></i> Hapus
+            </button>
+          </div>
+        `;
+      }).join('');
+    }, (error) => {
+      console.error(error);
+      alert("Gagal memuat database! Pastikan Firestore Database sudah dibuat dalam mode 'Test Mode' di Firebase Console.");
+    });
+
+    // Submit form ke Firebase
+    document.getElementById("formAdminLaundry").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("btnSubmit");
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengunggah ke Cloud...`;
+
+      try {
+        const file = document.getElementById("adm-fotoFile").files[0];
+        const compressedFoto = await compressImage(file);
+        const hargaRaw = document.getElementById("adm-harga").value;
+
+        await addDoc(laundryCol, {
+          nama: document.getElementById("adm-nama").value,
+          wilayah: document.getElementById("adm-wilayah").value,
+          harga: hargaRaw,
+          layanan: document.getElementById("adm-layanan").value,
+          whatsapp: document.getElementById("adm-whatsapp").value,
+          maps: document.getElementById("adm-maps").value,
+          website: document.getElementById("adm-website").value || "#",
+          instagram: document.getElementById("adm-instagram").value || "-",
+          ulasan: document.getElementById("adm-ulasan").value,
+          foto: compressedFoto,
+          ratingVal: 4.9,
+          hargaVal: parseInt(hargaRaw.replace(/[^0-9]/g, "")) || 6000,
+          createdAt: Date.now()
+        });
+
+        alert("✅ Berhasil! Data laundry sudah tersimpan di Cloud & muncul di semua HP/Laptop.");
+        document.getElementById("formAdminLaundry").reset();
+      } catch (err) {
+        alert("❌ Error menyimpan: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Cloud Firebase`;
+      }
+    });
+
+    // Hapus data dari Firebase
+    window.deleteLaundry = async function(id, nama) {
+      if (confirm(`Yakin ingin menghapus "${nama}" dari Cloud?`)) {
+        try {
+          await deleteDoc(doc(db, "laundry_mitra", id));
+          alert("🗑️ Data berhasil dihapus!");
+        } catch (err) {
+          alert("Gagal menghapus: " + err.message);
+        }
+      }
+    };
+  </script>
+</body>
+</html>
  
