@@ -11,7 +11,6 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <!-- FontAwesome Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -223,13 +222,13 @@
         </div>
       </div>
     </header>
+
     <!-- ================= TAB 1: DIREKTORI MAIN PAGE ================= -->
     <div id="tab-direktori" class="tab-content flex-grow">
       <!-- Hero Banner -->
       <section
         class="relative bg-gradient-to-b from-brand-900 via-brand-800 to-brand-700 text-white pt-12 pb-20 px-4 overflow-hidden"
       >
-        <!-- Background Shapes -->
         <div class="absolute inset-0 opacity-10 pointer-events-none">
           <div
             class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white blur-3xl"
@@ -329,7 +328,7 @@
                   id="resultCount"
                   class="text-[11px] font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md"
                 >
-                  Menampilkan 0 Mitra
+                  Memuat Mitra...
                 </span>
               </div>
             </div>
@@ -338,7 +337,6 @@
       </section>
       <!-- Content Listing Section -->
       <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Area Badge Subheader -->
         <div
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
         >
@@ -412,6 +410,7 @@
         </div>
       </main>
     </div>
+
     <!-- ================= TAB 2: PAKET MITRA ================= -->
     <div id="tab-mitra" class="tab-content hidden flex-grow">
       <section
@@ -593,6 +592,7 @@
         </div>
       </section>
     </div>
+
     <!-- ================= TAB 3: PROFIL & RATIONALE ================= -->
     <div id="tab-profil" class="tab-content hidden flex-grow">
       <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
@@ -742,6 +742,7 @@
         </div>
       </section>
     </div>
+
     <!-- ================= FOOTER ================= -->
     <footer
       class="bg-slate-900 text-slate-400 text-xs py-12 border-t border-slate-800 mt-auto"
@@ -785,7 +786,6 @@
           class="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-slate-500"
         >
           <p>© 2026 NyuciYuk Indonesia. All rights reserved.</p>
-          <!-- Secret Discreet Admin Link -->
           <a
             href="admin.html"
             class="hover:text-brand-400 transition flex items-center gap-1 opacity-70 hover:opacity-100 text-white font-semibold"
@@ -795,182 +795,8 @@
         </div>
       </div>
     </footer>
-    <!-- ================= MODAL 1: SECRET ADMIN INPUT ================= -->
-    <div
-      id="adminModal"
-      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
-    >
-      <div
-        class="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden my-8 transform transition-all"
-      >
-        <div
-          class="bg-slate-900 text-white p-6 flex justify-between items-center"
-        >
-          <div>
-            <h3 class="font-bold text-base flex items-center gap-2">
-              <i class="fa-solid fa-user-shield text-brand-400"></i> Portal
-              Admin - Tambah Laundry
-            </h3>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Input data mitra langsung ke direktori NyuciYuk
-            </p>
-          </div>
-          <button
-            onclick="closeAdminModal()"
-            class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <form
-          id="formAdminLaundry"
-          onsubmit="handleAdminSubmit(event)"
-          class="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar"
-        >
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"
-              >Nama Tempat Laundry *</label
-            >
-            <input
-              type="text"
-              id="adm-nama"
-              placeholder="Contoh: Barokah Clean Express"
-              required
-              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 outline-none"
-            />
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Wilayah / Area *</label
-              >
-              <select
-                id="adm-wilayah"
-                required
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none bg-white"
-              >
-                <option value="Semarang Tengah">
-                  Semarang Tengah (Kampus)
-                </option>
-                <option value="Semarang Barat">
-                  Semarang Barat (Kos/Hunian)
-                </option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Harga Layanan Utama *</label
-              >
-              <input
-                type="text"
-                id="adm-harga"
-                placeholder="Contoh: Rp 6.000 / kg"
-                required
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-              />
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"
-              >Detail Layanan (Pisahkan Koma) *</label
-            >
-            <input
-              type="text"
-              id="adm-layanan"
-              placeholder="Cuci Komplit, Gratis Antar-Jemput, Kilat 1 Hari"
-              required
-              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-            />
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Nomor WhatsApp (Awali 62) *</label
-              >
-              <input
-                type="text"
-                id="adm-whatsapp"
-                placeholder="6281234567890"
-                required
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-              />
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Link Google Maps *</label
-              >
-              <input
-                type="url"
-                id="adm-maps"
-                placeholder="https://maps.google.com/..."
-                required
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Website (Opsional)</label
-              >
-              <input
-                type="url"
-                id="adm-website"
-                placeholder="https://laundryku.com"
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-              />
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"
-                >Instagram (Opsional)</label
-              >
-              <input
-                type="text"
-                id="adm-instagram"
-                placeholder="@laundryku.smg"
-                class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-              />
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"
-              >Ulasan / Rating Singkat *</label
-            >
-            <input
-              type="text"
-              id="adm-ulasan"
-              placeholder="⭐ 4.9 (120+ ulasan) - Pelayanan ramah & wangi"
-              required
-              class="w-full border border-slate-200 p-2.5 rounded-xl text-xs outline-none"
-            />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"
-              >Foto Tempat Laundry *</label
-            >
-            <input
-              type="file"
-              id="adm-fotoFile"
-              accept="image/*"
-              required
-              class="w-full border border-slate-200 p-2 rounded-xl bg-slate-50 text-xs"
-            />
-            <p class="text-[10px] text-slate-400 mt-1">
-              Upload foto toko/spanduk/layanan langsung dari galeri.
-            </p>
-          </div>
-          <div class="pt-2">
-            <button
-              type="submit"
-              class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-brand-600/25 transition-all text-xs"
-            >
-              + Simpan & Terbitkan Ke Web
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- ================= MODAL 2: REGISTRASI MITRA ================= -->
+
+    <!-- ================= MODAL REGISTRASI MITRA ================= -->
     <div
       id="joinMitraModal"
       class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
@@ -1043,126 +869,111 @@
         </form>
       </div>
     </div>
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
-    <script>
+
+    <!-- ================= JAVASCRIPT LOGIC + FIREBASE CLOUD ================= -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyC58DNPa4GHeYH4NADooVrkWh6Yb-l-YYI",
+        authDomain: "laundry-d7ebf.firebaseapp.com",
+        projectId: "laundry-d7ebf",
+        storageBucket: "laundry-d7ebf.firebasestorage.app",
+        messagingSenderId: "494244964604",
+        appId: "1:494244964604:web:37287bb8c3eec92f6a8f79",
+        measurementId: "G-DL3B5X55VR"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const laundryCol = collection(db, "laundry_mitra");
+
+      let cloudLaundryData = [];
       let activeDistrict = "all";
       let selectedTag = null;
 
-      // Single Source of Truth dari LocalStorage (nyuciYukData)
-      function getLaundryData() {
-        const stored = localStorage.getItem("nyuciYukData");
-        return stored ? JSON.parse(stored) : [];
-      }
+      // Real-time listener membaca data langsung dari Firebase Cloud
+      const q = query(laundryCol, orderBy("createdAt", "desc"));
+      onSnapshot(q, (snapshot) => {
+        cloudLaundryData = snapshot.docs.map(doc => doc.data());
+        window.renderLaundryList();
+      });
 
-      // Tab Switcher
-      function switchTab(tabId) {
-        document
-          .querySelectorAll(".tab-content")
-          .forEach((el) => el.classList.add("hidden"));
+      window.switchTab = function(tabId) {
+        document.querySelectorAll(".tab-content").forEach((el) => el.classList.add("hidden"));
         document.getElementById(`tab-${tabId}`).classList.remove("hidden");
-        // Update Nav States
         document.querySelectorAll(".nav-btn").forEach((btn) => {
           btn.classList.remove("bg-white", "text-brand-700", "shadow-sm");
           btn.classList.add("text-slate-600");
         });
-        const activeNav = document.getElementById(
-          `nav-${tabId === "direktori" ? "semua" : tabId}`,
-        );
+        const activeNav = document.getElementById(`nav-${tabId === "direktori" ? "semua" : tabId}`);
         if (activeNav) {
           activeNav.classList.add("bg-white", "text-brand-700", "shadow-sm");
           activeNav.classList.remove("text-slate-600");
         }
         window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      };
 
-      // Filter District
-      function filterDistrict(district) {
+      window.filterDistrict = function(district) {
         activeDistrict = district;
         document.querySelectorAll(".district-btn").forEach((btn) => {
           btn.classList.remove("bg-white", "shadow-sm", "text-brand-700");
           btn.classList.add("text-slate-600");
         });
         if (district === "all") {
-          document
-            .getElementById("btn-dist-all")
-            .classList.add("bg-white", "shadow-sm", "text-brand-700");
-          document.getElementById("currentDistrictTitle").innerText =
-            "Daftar Mitra Laundry Semarang";
+          document.getElementById("btn-dist-all").classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText = "Daftar Mitra Laundry Semarang";
         } else if (district === "Semarang Tengah") {
-          document
-            .getElementById("btn-dist-tengah")
-            .classList.add("bg-white", "shadow-sm", "text-brand-700");
-          document.getElementById("currentDistrictTitle").innerText =
-            "Mitra Laundry - Semarang Tengah (Area Kampus)";
+          document.getElementById("btn-dist-tengah").classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText = "Mitra Laundry - Semarang Tengah (Area Kampus)";
         } else if (district === "Semarang Barat") {
-          document
-            .getElementById("btn-dist-barat")
-            .classList.add("bg-white", "shadow-sm", "text-brand-700");
-          document.getElementById("currentDistrictTitle").innerText =
-            "Mitra Laundry - Semarang Barat (Area Kos & Hunian)";
+          document.getElementById("btn-dist-barat").classList.add("bg-white", "shadow-sm", "text-brand-700");
+          document.getElementById("currentDistrictTitle").innerText = "Mitra Laundry - Semarang Barat (Area Kos & Hunian)";
         }
-        renderLaundryList();
-      }
+        window.renderLaundryList();
+      };
 
-      // Tag Filter Toggle
-      function toggleTagFilter(tagName) {
+      window.toggleTagFilter = function(tagName) {
         selectedTag = selectedTag === tagName ? null : tagName;
         document.querySelectorAll(".tag-btn").forEach((btn) => {
-          btn.classList.remove(
-            "bg-brand-600",
-            "text-white",
-            "border-brand-600",
-          );
+          btn.classList.remove("bg-brand-600", "text-white", "border-brand-600");
           btn.classList.add("border-slate-200", "text-slate-600");
         });
         if (selectedTag) {
           const activeBtn = document.getElementById(`tag-${selectedTag}`);
           if (activeBtn) {
-            activeBtn.classList.add(
-              "bg-brand-600",
-              "text-white",
-              "border-brand-600",
-            );
+            activeBtn.classList.add("bg-brand-600", "text-white", "border-brand-600");
             activeBtn.classList.remove("border-slate-200", "text-slate-600");
           }
         }
-        renderLaundryList();
-      }
+        window.renderLaundryList();
+      };
 
-      function resetFilters() {
+      window.resetFilters = function() {
         document.getElementById("searchInput").value = "";
         document.getElementById("sortSelect").value = "default";
         selectedTag = null;
         activeDistrict = "all";
-        filterDistrict("all");
-      }
+        window.filterDistrict("all");
+      };
 
-      // Main Render Function
-      function renderLaundryList() {
-        const allData = getLaundryData();
+      window.renderLaundryList = function() {
         const searchQuery = (document.getElementById("searchInput").value || "").toLowerCase();
         const sortVal = document.getElementById("sortSelect").value;
 
-        let filtered = allData.filter((item) => {
-          const itemWilayah = item.wilayah || item.area || "";
+        let filtered = cloudLaundryData.filter((item) => {
+          const itemWilayah = item.wilayah || "";
           const itemNama = item.nama || "";
           const itemLayanan = item.layanan || "";
 
-          const matchDistrict =
-            activeDistrict === "all" ||
-            itemWilayah.toLowerCase().includes(activeDistrict.toLowerCase());
-          const matchSearch =
-            itemNama.toLowerCase().includes(searchQuery) ||
-            itemLayanan.toLowerCase().includes(searchQuery) ||
-            itemWilayah.toLowerCase().includes(searchQuery);
-          const matchTag =
-            !selectedTag ||
-            itemLayanan.toLowerCase().includes(selectedTag.toLowerCase());
+          const matchDistrict = activeDistrict === "all" || itemWilayah.toLowerCase().includes(activeDistrict.toLowerCase());
+          const matchSearch = itemNama.toLowerCase().includes(searchQuery) || itemLayanan.toLowerCase().includes(searchQuery) || itemWilayah.toLowerCase().includes(searchQuery);
+          const matchTag = !selectedTag || itemLayanan.toLowerCase().includes(selectedTag.toLowerCase());
 
           return matchDistrict && matchSearch && matchTag;
         });
 
-        // Sorting
         if (sortVal === "harga-asc") {
           filtered.sort((a, b) => (a.hargaVal || 6000) - (b.hargaVal || 6000));
         } else if (sortVal === "harga-desc") {
@@ -1173,8 +984,7 @@
 
         const grid = document.getElementById("laundry-grid");
         const emptyState = document.getElementById("emptyState");
-        document.getElementById("resultCount").innerText =
-          `Menampilkan ${filtered.length} Mitra`;
+        document.getElementById("resultCount").innerText = `Menampilkan ${filtered.length} Mitra`;
 
         if (filtered.length === 0) {
           grid.innerHTML = "";
@@ -1183,143 +993,72 @@
         }
 
         emptyState.classList.add("hidden");
-        grid.innerHTML = filtered
-          .map((item) => {
-            const servicesArray = (item.layanan || "Cuci Komplit").split(",").map((s) => s.trim());
-            const serviceBadges = servicesArray
-              .map(
-                (s) =>
-                  `<span class="bg-slate-100 text-slate-700 text-[10px] font-medium px-2.5 py-1 rounded-md inline-block mr-1 mb-1">✨ ${s}</span>`,
-              )
-              .join("");
-            const isTengah = (item.wilayah || "").includes("Tengah");
-            const badgeColor = isTengah
-              ? "bg-blue-100 text-blue-800"
-              : "bg-emerald-100 text-emerald-800";
-            const waNum = item.whatsapp || item.wa || "628123456789";
+        grid.innerHTML = filtered.map((item) => {
+          const servicesArray = (item.layanan || "Cuci Komplit").split(",").map((s) => s.trim());
+          const serviceBadges = servicesArray.map((s) => `<span class="bg-slate-100 text-slate-700 text-[10px] font-medium px-2.5 py-1 rounded-md inline-block mr-1 mb-1">✨ ${s}</span>`).join("");
+          const isTengah = (item.wilayah || "").includes("Tengah");
+          const badgeColor = isTengah ? "bg-blue-100 text-blue-800" : "bg-emerald-100 text-emerald-800";
 
-            return `
-          <div class="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group">
-            
-            <!-- Image Header -->
-            <div class="relative h-48 w-full overflow-hidden bg-slate-100">
-              <img src="${item.foto || 'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80'}" alt="${item.nama}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80'">
-              <div class="absolute top-3 left-3">
-                <span class="${badgeColor} text-[10px] font-bold px-3 py-1 rounded-full shadow-sm backdrop-blur-md">
-                  <i class="fa-solid fa-location-dot mr-1"></i>${item.wilayah || item.area || 'Semarang'}
-                </span>
-              </div>
-              <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-300 font-extrabold text-xs px-3 py-1 rounded-full shadow-md">
-                ${item.harga}
-              </div>
-            </div>
-            <!-- Card Body -->
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div>
-                <h3 class="text-lg font-bold text-slate-800 group-hover:text-brand-600 transition-colors">${item.nama}</h3>
-                <p class="text-xs text-amber-600 font-semibold mt-1 flex items-center gap-1">
-                  ${item.ulasan || '⭐ 4.9 (Ulasan Terpercaya)'}
-                </p>
-                <!-- Services Badges -->
-                <div class="mt-3">
-                  ${serviceBadges}
+          return `
+            <div class="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img src="${item.foto}" alt="${item.nama}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop&q=80'">
+                <div class="absolute top-3 left-3">
+                  <span class="${badgeColor} text-[10px] font-bold px-3 py-1 rounded-full shadow-sm backdrop-blur-md">
+                    <i class="fa-solid fa-location-dot mr-1"></i>${item.wilayah}
+                  </span>
                 </div>
-                <!-- Socials & Web -->
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span class="flex items-center gap-1.5"><i class="fa-brands fa-instagram text-pink-500"></i> ${item.instagram || "-"}</span>
-                  ${item.website && item.website !== "#" ? `<a href="${item.website}" target="_blank" class="text-brand-600 font-semibold hover:underline flex items-center gap-1"><i class="fa-solid fa-globe"></i> Web</a>` : ""}
+                <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-300 font-extrabold text-xs px-3 py-1 rounded-full shadow-md">
+                  ${item.harga}
                 </div>
               </div>
-              <!-- Action Buttons -->
-              <div class="grid grid-cols-2 gap-2 pt-2">
-                <a href="https://wa.me/${waNum}?text=Halo%20${encodeURIComponent(item.nama)},%20saya%20menemukan%20laundry%20Anda%20di%20NyuciYuk." target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs text-center transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5">
-                  <i class="fa-brands fa-whatsapp text-sm"></i> Chat WA
-                </a>
-                <a href="${item.maps || '#'}" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-1.5">
-                  <i class="fa-solid fa-map-location-dot text-slate-500"></i> Maps
-                </a>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <h3 class="text-lg font-bold text-slate-800 group-hover:text-brand-600 transition-colors">${item.nama}</h3>
+                  <p class="text-xs text-amber-600 font-semibold mt-1 flex items-center gap-1">
+                    ${item.ulasan}
+                  </p>
+                  <div class="mt-3">
+                    ${serviceBadges}
+                  </div>
+                  <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span class="flex items-center gap-1.5"><i class="fa-brands fa-instagram text-pink-500"></i> ${item.instagram || "-"}</span>
+                    ${item.website && item.website !== "#" ? `<a href="${item.website}" target="_blank" class="text-brand-600 font-semibold hover:underline flex items-center gap-1"><i class="fa-solid fa-globe"></i> Web</a>` : ""}
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                  <a href="https://wa.me/${item.whatsapp}?text=Halo%20${encodeURIComponent(item.nama)},%20saya%20menemukan%20laundry%20Anda%20di%20NyuciYuk.%20Mau%20tanya%20layanan..." target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs text-center transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Chat WA
+                  </a>
+                  <a href="${item.maps}" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-map-location-dot text-slate-500"></i> Maps
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        `;
-          })
-          .join("");
-      }
+          `;
+        }).join("");
+      };
 
-      // Modal Helpers
-      function openAdminModal() {
-        document.getElementById("adminModal").classList.remove("hidden");
-      }
-      function closeAdminModal() {
-        document.getElementById("adminModal").classList.add("hidden");
-      }
-      function openJoinMitraModal(planName) {
+      window.openJoinMitraModal = function(planName) {
         document.getElementById("selectedPlanName").innerText = planName;
         document.getElementById("joinMitraModal").classList.remove("hidden");
-      }
-      function closeJoinMitraModal() {
+      };
+      window.closeJoinMitraModal = function() {
         document.getElementById("joinMitraModal").classList.add("hidden");
-      }
-      function toggleMobileMenu() {
+      };
+      window.toggleMobileMenu = function() {
         document.getElementById("mobile-menu").classList.toggle("hidden");
-      }
-
-      // Admin Submit Handler (Direct Modal Submission)
-      function handleAdminSubmit(e) {
-        e.preventDefault();
-        const fileInput = document.getElementById("adm-fotoFile");
-        const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            const hargaRaw = document.getElementById("adm-harga").value;
-            const numericHarga =
-              parseInt(hargaRaw.replace(/[^0-9]/g, "")) || 6000;
-            const newMitra = {
-              nama: document.getElementById("adm-nama").value,
-              wilayah: document.getElementById("adm-wilayah").value,
-              harga: hargaRaw,
-              layanan: document.getElementById("adm-layanan").value,
-              whatsapp: document.getElementById("adm-whatsapp").value,
-              maps: document.getElementById("adm-maps").value,
-              website: document.getElementById("adm-website").value || "#",
-              instagram: document.getElementById("adm-instagram").value || "-",
-              ulasan: document.getElementById("adm-ulasan").value,
-              foto: event.target.result,
-              ratingVal: 4.9,
-              hargaVal: numericHarga,
-            };
-            const currentData = getLaundryData();
-            currentData.unshift(newMitra);
-            localStorage.setItem("nyuciYukData", JSON.stringify(currentData));
-            alert("Berhasil menambah data laundry baru ke NyuciYuk!");
-            closeAdminModal();
-            document.getElementById("formAdminLaundry").reset();
-            switchTab("direktori");
-            filterDistrict("all");
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-
-      // Join Mitra WhatsApp Trigger
-      function handleJoinMitraWhatsApp(e) {
+      };
+      window.handleJoinMitraWhatsApp = function(e) {
         e.preventDefault();
         const nama = document.getElementById("reg-nama").value;
         const wilayah = document.getElementById("reg-wilayah").value;
         const wa = document.getElementById("reg-wa").value;
         const plan = document.getElementById("selectedPlanName").innerText;
         const text = `Halo Admin NyuciYuk! Saya berminat mendaftarkan laundry saya.\n\n*Nama Usaha:* ${nama}\n*Wilayah:* ${wilayah}\n*Nomor WA:* ${wa}\n*Paket Pilihan:* ${plan}`;
-        window.open(
-          `https://wa.me/6281234567890?text=${encodeURIComponent(text)}`,
-          "_blank",
-        );
-        closeJoinMitraModal();
-      }
-
-      // Initialize on Load
-      window.onload = function () {
-        renderLaundryList();
+        window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, "_blank");
+        window.closeJoinMitraModal();
       };
     </script>
   </body>
